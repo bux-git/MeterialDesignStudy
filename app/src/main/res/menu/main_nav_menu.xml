@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="all">
+
+        <item
+            android:id="@+id/app_bar"
+            android:icon="@android:drawable/ic_delete"
+            android:title="AppbarActivity"></item>
+        <item
+            android:icon="@android:drawable/ic_menu_save"
+            android:title="Start"></item>
+        <item
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Gallery"></item>
+        <item
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Manage"></item>
+        <item
+            android:icon="@drawable/ic_menu_send"
+            android:title="Send"></item>
+        <item
+            android:icon="@drawable/ic_menu_share"
+            android:title="Share"></item>
+
+    </group>
+
+</menu>
