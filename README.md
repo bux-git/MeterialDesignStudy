@@ -114,8 +114,6 @@ __4.ActionBarDrawerToggle与ToolBar__
     将抽屉滑动与Toolbar图标关联
     1. mToolbar = (Toolbar) findViewById(R.id.toolbar);
        setSupportActionBar(mToolbar);
-       //显示ToolBar左侧图标
-       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     2.  
      初始化ActionBarDrawerToggle
      ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, mToolbar, R.string.open_string, R.string.close_string)

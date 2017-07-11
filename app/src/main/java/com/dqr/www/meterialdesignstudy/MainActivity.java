@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.dl_content);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        //给Toolbar设置自定义图标
+        //mToolbar.setNavigationIcon(R.drawable.ic_menu_camera);
         //显示ToolBar左侧图标
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rl_content);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -80,26 +82,25 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 mToolbar.setTitle("DrawerClosed");
+               // mToolbar.setNavigationIcon(R.drawable.ic_menu_gallery);
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 mToolbar.setTitle("DrawerOpened");
+                //mToolbar.setNavigationIcon(R.drawable.ic_menu_send);
             }
 
-            @Override
-            public boolean onOptionsItemSelected(MenuItem item) {
-                if (toggle.onOptionsItemSelected(item)) {
-                    return true;
-                }
-                //处理其他菜单点击事件
-                return super.onOptionsItemSelected(item);
-            }
+
+
+
         };
         //打开侧滑栏
         drawerLayout.openDrawer(Gravity.LEFT);
         drawerLayout.addDrawerListener(toggle);
+
+
         //ActionBarDrawerToggle的syncState()方法会和Toolbar关联，将图标放入到Toolbar上
         toggle.syncState();
        /* mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
