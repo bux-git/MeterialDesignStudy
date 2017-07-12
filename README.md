@@ -2,13 +2,15 @@
 谷歌在推出Android5.0的同时推出了全新的设计Material Design，谷歌为了给我们提供更加规范的MD设计风格的控件，在2015年IO大会上推出了Design支持包，Design常用的新控件有下面几种。
 ## 目录
 * [**官方侧滑菜单DrawerLayout**](#DrawerLayout)
+* [**导航栏NavigationView**](#NavigationView)
+* [**AppbarLayout**](#AppbarLayout)
+## DrawerLayout  
+![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/drawerlayout01.gif1)     
 
-##### DrawerLayout  
-![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/drawerlayout01.jpg)     
-__1.概念__    
+__一.概念__    
     DrawerLayout其实是一个布局控件，跟LinearLayout等控件是一种东西，但是drawerLayout带有滑动的功能。只要按照drawerLayout的规定布局方式写完布局，就能有侧滑的效果
 
-__2.使用__    
+__二.使用__    
 DrawerLayout分为侧边菜单和主内容区两部分，侧边菜单可以根据手势展开与隐藏（drawerLayout自身特性），主内容区的内容可以随着菜单的点击而变化（这需要使用者自己实现）    
 ```
  <android.support.v4.widget.DrawerLayout
@@ -39,7 +41,7 @@ DrawerLayout分为侧边菜单和主内容区两部分，侧边菜单可以根�
     主内容区的布局代码要放在侧滑菜单布局的前面, 因为 XML 顺序意味着按 z 序（层叠顺序）排序，并且抽屉式导航栏必须位于内容顶部；
     侧滑菜单部分的布局（NavigationView）必须设置layout_gravity属性，他表示侧滑菜单是在左边还是右边，而且如果不设置在打开关闭抽屉的时候会报错，
     设置了layout_gravity="start/left"的视图才会被认为是侧滑菜单
-__3.DrawerLayout常用方法__  
+__三.DrawerLayout常用方法__  
 
     /**
       * Adds the specified listener to the list of listeners that will be notified of drawer events.
@@ -106,7 +108,7 @@ __3.DrawerLayout常用方法__
                 }
             });
     
-__4.ActionBarDrawerToggle与ToolBar__    
+__四.ActionBarDrawerToggle与ToolBar__    
 
     ActionBarDrawerToggle实现了DrawerListener，所以他能做DrawerListener可以做的任何事情，同时他还能将drawerLayout的展开和隐藏与Toolbar的app 图标关联起来，
     点击图标的时候还能展开或者隐藏菜单
@@ -134,5 +136,73 @@ __4.ActionBarDrawerToggle与ToolBar__
               <item name="spinBars">true</item>
               <item name="color">@android:color/holo_red_light</item>
           </style>
+
+## NavigationView   
+__一.概念__    
+    NavigationView顾名思义是指导航菜单栏,一般配合DrawerLayout使用作为侧滑菜单栏  
+__二.使用__    
+    NavigationView需要接收几个必要的参数、一个用于显示头部的布局app:headerLayout="@layout/main_header_layout"（可选） 以及用于建立导向选项的菜单app:menu="@menu/main_nav_menu"，这些都设置完之后，你就只添加监听选中事件的listener就行了。   
+    其中app:menu配置的是一个菜单文件    
+    
+    <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <group android:id="@+id/group1"
+               android:checkableBehavior="single">
+            <item
+                android:id="@+id/app_bar"
+                android:icon="@android:drawable/ic_delete"
+                android:title="AppbarActivity"></item>
+        </group>
+    
+        <group android:id="@+id/group2"
+               android:checkableBehavior="single">
+            <item
+                android:icon="@android:drawable/ic_menu_save"
+                android:title="Start"></item>
+        </group>
+    <item android:id="@+id/sub1" android:title="sub item">
+        <menu>
+            <item
+                android:icon="@android:drawable/ic_menu_save"
+                android:title="Start"></item>
+        </menu>
+    </item>
+    </menu>
+__其中:__     
+        __1.group表示分组 checkableBehavior用来设置item选中模式 有3个值 表示选中状态 single单选 all多选 none 默认   
+           item可以表示一个子项 也可在其中加入menu添加子菜单来实现带有头部的分组效果  
+         每个group 和menu子菜单都会在顶部产生移到横线__    
+         
+__2.设置item选中事件__
+        
+        
+         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        item.setChecked(true);
+                        drawerLayout.closeDrawer(Gravity.LEFT);
+                        return true;
+                    }
+                });
+                
+__注意：这样只可以设置group中的item选中状态__   
+__item子菜单设置选中状态__   
+
+            1.首先设置子菜单item android:checkable="true"
+            2.public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    item.setChecked(true);
+                     if (mPreMenuItem != null) mPreMenuItem.setChecked(false);
+                     item.setChecked(true);
+                      drawerLayout.closeDrawers();
+                      mPreMenuItem = item;
+                      return true;
+             }
+         
+__三.常用属性__
+
+    app:itemIconTint="" 修改图标颜色
+    app:itemBackground="" item背景颜色
+    app:itemTextColor=""  item 文字颜色
+   
+## AppbarLayout 
 
 [回到顶部](#目录)

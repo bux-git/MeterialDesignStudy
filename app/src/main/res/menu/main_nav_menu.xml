@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="all">
-
+    <group android:id="@+id/group1"
+           android:checkableBehavior="single">
         <item
             android:id="@+id/app_bar"
             android:icon="@android:drawable/ic_delete"
@@ -21,7 +21,22 @@
         <item
             android:icon="@drawable/ic_menu_share"
             android:title="Share"></item>
+        <item  android:title="sub item">
+            <menu>
+                <item
+                    android:checkable="true"
+                    android:icon="@android:drawable/ic_menu_save"
+                    android:title="Start"></item>
+            </menu>
+        </item>
 
+    </group>
+
+    <group android:id="@+id/group2"
+           android:checkableBehavior="single">
+        <item
+            android:icon="@android:drawable/ic_menu_save"
+            android:title="Start"></item>
     </group>
 
 </menu>

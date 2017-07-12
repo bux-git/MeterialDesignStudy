@@ -1,6 +1,7 @@
 package com.dqr.www.meterialdesignstudy;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         drawerLayout = (DrawerLayout) findViewById(R.id.dl_content);
+        mNavigationView = (NavigationView) findViewById(R.id.ng_view);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         //给Toolbar设置自定义图标
@@ -34,6 +36,29 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new MainAdapter());
 
+        initDrawerLayoutSetting();
+
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            private MenuItem mPreMenuItem;
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                if (mPreMenuItem != null) mPreMenuItem.setChecked(false);
+                item.setChecked(true);
+                drawerLayout.closeDrawers();
+                mPreMenuItem = item;
+
+               switch (item.getItemId()){
+                   case R.id.app_bar:
+
+                       break;
+               }
+                return true;
+            }
+        });
+    }
+
+    private void initDrawerLayoutSetting() {
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             /**
              * 当抽屉被滑动的时候调用月此方法
@@ -77,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onDrawerStateChanged: "+newState);
             }
         });
+
         toggle = new ActionBarDrawerToggle(this, drawerLayout, mToolbar, R.string.open_string, R.string.close_string) {
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -100,21 +126,8 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.openDrawer(Gravity.LEFT);
         drawerLayout.addDrawerListener(toggle);
 
-
         //ActionBarDrawerToggle的syncState()方法会和Toolbar关联，将图标放入到Toolbar上
         toggle.syncState();
-       /* mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                item.setChecked(true);
-               switch (item.getItemId()){
-                   case R.id.app_bar:
-
-                       break;
-               }
-                return true;
-            }
-        });*/
     }
 
 
