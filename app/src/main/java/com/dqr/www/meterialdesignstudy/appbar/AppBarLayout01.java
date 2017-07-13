@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,14 +19,26 @@ import com.dqr.www.meterialdesignstudy.R;
  */
 
 public class AppBarLayout01 extends AppCompatActivity {
+    private static final String TAG = "AppBarLayout01";
     AppBarLayout.LayoutParams  appParams;
     View appChildScrollView;
+    AppBarLayout mAppBarLayout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_bar_01);
         appChildScrollView = findViewById(R.id.child_scroll_view);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         appParams= (AppBarLayout.LayoutParams) appChildScrollView.getLayoutParams();
+
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                Log.d(TAG, "onOffsetChanged: verticalOffset:"+verticalOffset+"  TotalScrollRange:"+mAppBarLayout.getTotalScrollRange());
+            }
+        });
+
+
 
     }
 

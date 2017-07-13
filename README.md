@@ -209,14 +209,14 @@ __三.常用属性__
     app:itemTextColor=""  item 文字颜色
 ## 3
 #### AppBarLayout
-
+![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/appbarlayout01.gif1)  
 __一.概念__    
 
     AppBarLayout继承自LinearLayout，布局方向为垂直方向。所以你可以把它当成垂直布局的LinearLayout来使用。
     AppBarLayout是在LinearLayou上加了一些材料设计的概念，它可以让你定制当某个可滚动View的滚动手势发生变化时，其内部的子View实现何种动作   
 __解释:__  
-__1.AppBarLayout内部子View可以和一个可滚动的View的滑动事件产生关联，从而使AppBarLayout内部的子View执行相关的动作，   
-内部子View可以是Toolbar、任何View或者布局__   
+__1.AppBarLayout内部子View可以和一个可滚动的View的滑动事件产生关联，从而使AppBarLayout内部的子View执行相关联的滑动动作，   
+内部子View可以是Toolbar、任何View或者布局，比如__   
 >注意：AppbarLayout 严重依赖于CoordinatorLayout，必须用于CoordinatorLayout 的直接子View，如果你将AppbarLayout 放在其他的ViewGroup 里面，那么它的这些功能是无效的
 
 __2.AppBarLayout如何与可滚动的View关联:__    
@@ -256,6 +256,25 @@ NestedScrollView 向上滑动和Scroll，enterAlways效果一样 ，向下滑动
 在滚动结束后，view滑动到部分可见时，如果隐藏区域比显示区域大则它将滚动离开屏幕，显示区域比影藏区域大，它将自动滚动到完全显示。必须配合scroll使用__     
 
 __5.app:layout_scrollInterpolator属性指定滚动动画效果的插值器.__      
+   
+__6.AppBarLayout常用方法__
+>* addOnOffsetChangedListener 当AppbarLayout 的偏移发生改变的时候回调，也就是子View滑动。
 
+>* getTotalScrollRange 返回AppbarLayout 所有子View的滑动范围
 
+>* removeOnOffsetChangedListener 移除监听器
+
+>* setExpanded (boolean expanded, boolean animate)设置AppbarLayout 是展开状态还是折叠状态，animate 参数控制切换到新的状态时是否需要动画
+
+>* setExpanded (boolean expanded) 设置AppbarLayout 是展开状态还是折叠状态,默认有动画
+            
+            
+### 学习资料               
+[Material Design之 AppbarLayout 开发实践总结](http://www.jianshu.com/p/ac56f11e7ce1)    
+[玩转AppBarLayout，更酷炫的顶部栏](http://blog.csdn.net/huachao1001/article/details/51558835)    
+[CoordinatorLayout, AppBarLayout, CollapsingToolbarLayout使用](http://www.cnblogs.com/mengdd/p/5641187.html)    
+[]()    
+[]()    
+[]()    
+[]()    
 [回到顶部](#目录) 
