@@ -1,5 +1,6 @@
 package com.dqr.www.meterialdesignstudy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,6 +14,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.dqr.www.meterialdesignstudy.appbar.AppBarLayout01;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             private MenuItem mPreMenuItem;
+
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 item.setChecked(true);
@@ -48,11 +52,11 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
                 mPreMenuItem = item;
 
-               switch (item.getItemId()){
-                   case R.id.app_bar:
-
-                       break;
-               }
+                switch (item.getItemId()) {
+                    case R.id.app_bar:
+                        startActivity(new Intent(MainActivity.this, AppBarLayout01.class));
+                        break;
+                }
                 return true;
             }
         });
@@ -99,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public void onDrawerStateChanged(int newState) {
-                Log.d(TAG, "onDrawerStateChanged: "+newState);
+                Log.d(TAG, "onDrawerStateChanged: " + newState);
             }
         });
 
@@ -108,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 mToolbar.setTitle("DrawerClosed");
-               // mToolbar.setNavigationIcon(R.drawable.ic_menu_gallery);
+                // mToolbar.setNavigationIcon(R.drawable.ic_menu_gallery);
             }
 
             @Override
@@ -117,8 +121,6 @@ public class MainActivity extends AppCompatActivity {
                 mToolbar.setTitle("DrawerOpened");
                 //mToolbar.setNavigationIcon(R.drawable.ic_menu_send);
             }
-
-
 
 
         };

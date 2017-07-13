@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/child_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/black_6"
+        android:gravity="center"
+        android:minHeight="50dp"
+        android:text="我是AppBarLayout内部执行动作的子View"/>
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="100dp"
+              android:background="@color/colorAccent"
+              android:gravity="center"
+              android:text="不执行动作的View"/>
+
+</merge>

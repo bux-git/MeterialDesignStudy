@@ -215,7 +215,8 @@ __一.概念__
     AppBarLayout继承自LinearLayout，布局方向为垂直方向。所以你可以把它当成垂直布局的LinearLayout来使用。
     AppBarLayout是在LinearLayou上加了一些材料设计的概念，它可以让你定制当某个可滚动View的滚动手势发生变化时，其内部的子View实现何种动作   
 __解释:__  
-__1.AppBarLayout可以和一个可滚动的View的滑动事件产生关联，从而使AppBarLayout内部的子View实现相关的动作__   
+__1.AppBarLayout内部子View可以和一个可滚动的View的滑动事件产生关联，从而使AppBarLayout内部的子View执行相关的动作，   
+内部子View可以是Toolbar、任何View或者布局__   
 >注意：AppbarLayout 严重依赖于CoordinatorLayout，必须用于CoordinatorLayout 的直接子View，如果你将AppbarLayout 放在其他的ViewGroup 里面，那么它的这些功能是无效的
 
 __2.AppBarLayout如何与可滚动的View关联:__    
@@ -241,13 +242,20 @@ __4.AppBarLayout内部子View如何执行动作__
 >__1.内部的子View通过在布局中加app:layout_scrollFlags设置执行的动作__   
 >__layout_scrollFlagsyou 有如下几个值：__  
 
->>* __1、 scroll ,子View 添加layout_scrollFlags属性 的值scroll 时，这个View将会随着可滚动View（如：ScrollView,以下都会用ScrollView 来代替可滚动的View ）一起滚动，就好像子View 是属于ScrollView的一部分一样。__
+>>* __1、 scroll ,子View 添加layout_scrollFlags属性 的值scroll 时，这个View将会随着可滚动View（如：NestedScrollView,NestedScrollView 来代替可滚动的View ）一起滚动，就好像子View 是属于ScrollView的一部分一样。__
 
->>* __2、 enterAlways ,子View 添加layout_scrollFlags属性 的值有enterAlways 时, 当ScrollView 向下滑动时，子View 将直接向下滑动，而不管ScrollView 是否在滑动。注意：要与scroll 搭配使用，否者是不能滑动的。__
+>>* __2、 enterAlways ,子View 添加layout_scrollFlags属性 的值有enterAlways 时, NestedScrollView 滑动时，子View将剥夺滑动事件先执行动作后 ，NestedScrollView 再滑动。
+注意：要与scroll 搭配使用，否者是不能滑动的。__
 
->>* __3、 enterAlwaysCollapsed , enterAlwaysCollapsed 是对enterAlways 的补充，当ScrollView 向下滑动的时候，滑动View（也就是设置了enterAlwaysCollapsed 的View）下滑至折叠的高度，当ScrollView 到达滑动范围的结束值的时候，滑动View剩下的部分开始滑动。这个折叠的高度是通过View的minimum height （最小高度）指定的。__  
+>>* __3、 enterAlwaysCollapsed ,必须配合scroll|enterAlways 一起使用, enterAlwaysCollapsed 是对enterAlways 的补充，
+NestedScrollView 向上滑动和Scroll，enterAlways效果一样 ，向下滑动时 滑动View先下滑到最小高度 minHeight（最小高度）指定的，然后让NestedScrollView滑动到顶点后，滑动View再继续下滑到最大值。__  
   
->>* __4、exitUntilCollapsed, 当ScrollView 滑出屏幕时（也就时向上滑动时），滑动View先响应滑动事件，滑动至折叠高度，也就是通过minimum height 设置的最小高度后，就固定不动了，再把滑动事件交给 scrollview 继续滑动。__   
+>>* __4、exitUntilCollapsed,必须配合scroll 当NestedScrollView向上滑动时，滑动View先响应滑动事件，滑动至最小高度，(也就是通过minHeight 设置的最小高度）后，就固定不动了，再把滑动事件交给 NestedScrollView 继续滑动。__   
 
->>* __5、snap,意思是：在滚动结束后，如果view只是部分可见，它将滑动到最近的边界。比如，如果view的底部只有25%可见，它将滚动离开屏幕，而如果底部有75%可见，它将滚动到完全显示。__
-[回到顶部](#目录)
+>>* __5、snap,意思是：会给滑动view的滑动事件添加一个自动滚动属性，   
+在滚动结束后，view滑动到部分可见时，如果隐藏区域比显示区域大则它将滚动离开屏幕，显示区域比影藏区域大，它将自动滚动到完全显示。必须配合scroll使用__     
+
+__5.app:layout_scrollInterpolator属性指定滚动动画效果的插值器.__      
+
+
+[回到顶部](#目录) 
