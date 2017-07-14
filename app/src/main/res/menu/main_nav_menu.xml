@@ -11,8 +11,9 @@
             android:icon="@android:drawable/ic_menu_save"
             android:title="CollapsingToolbarLayout"></item>
         <item
+            android:id="@+id/others"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery"></item>
+            android:title="Others"></item>
         <item
             android:icon="@drawable/ic_menu_manage"
             android:title="Manage"></item>

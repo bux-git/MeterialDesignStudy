@@ -5,11 +5,12 @@
 * [**2.导航栏NavigationView**](#2)
 * [**3.AppbarLayout**](#3)
 * [**4.CollapsingToolbarLayout**](#4)
+* [**5.TextInputLayout**](#5)
 
 ## 1
 ## 官方侧滑菜单DrawerLayout 
 
-![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/drawerlayout01.gif1)     
+![imgshttps://github.com/bux-git/MeterialDesignStudy/raw/master/imges/drawerlayout01.gif1)     
 
 __一.概念__    
     DrawerLayout其实是一个布局控件，跟LinearLayout等控件是一种东西，但是drawerLayout带有滑动的功能。只要按照drawerLayout的规定布局方式写完布局，就能有侧滑的效果
@@ -210,7 +211,7 @@ __三.常用属性__
     app:itemTextColor=""  item 文字颜色
 ## 3
 #### AppBarLayout
-![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/appbarlayout01.gif1)  
+![imgshttps://github.com/bux-git/MeterialDesignStudy/raw/master/imges/appbarlayout01.gif1)  
 __一.概念__    
 
     AppBarLayout继承自LinearLayout，布局方向为垂直方向。所以你可以把它当成垂直布局的LinearLayout来使用。
@@ -271,7 +272,7 @@ __6.AppBarLayout常用方法__
   
 ## 4
 ## CollapsingToolbarLayout
-[images](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/collspasingtoolbarlayout01.gif1)
+[imageshttps://github.com/bux-git/MeterialDesignStudy/raw/master/imges/collspasingtoolbarlayout01.gif1)
 __一.概念__    
 CollapsingToolbarLayout是用来对Toolbar进行再次包装的ViewGroup，主要是用于实现折叠的App Bar效果。      
 它需要作为AppBarLayout的直接子View，并且需要作为AppBarLayout的关联滑动View   
@@ -311,8 +312,66 @@ CollapsingToolbarLayout使用时
 2.根据需求设置自身标题等一些相关属性     
 3.添加Toolbar和其他子View 
 
+## 5
+## TextInputLayout
 
+__1.概念__  
+TextInputLayout 将EditText包裹起来能够辅助EditText实现一些如hint 以浮动标签的形式显示出来，同时可以通过setErrorEnabled(boolean)和setError(CharSequence)来显示错误信息等   
+每一个TextInputLayout中只能有一个EditText
+  
+__XML属性&常用方法__  
+  
+* counterEnabled 对应方法 setCounterEnabled(boolean)
 
+    >用于设置字符计数器的显示与隐藏，会在布局右下角显示输入字符的进度：1/10这样
+    
+* counterMaxLength 对应方法 setCounterMaxLength(int)
+    
+  >设置字符计数器的最大长度。（仅用于设置计数器最大值，并不影响文本实际能输入的最大长度）
+
+* errorEnabled 对应方法 setErrorEnabled(boolean)
+    
+  >用于设置错误提示是否显示
+
+* hint 对应方法 setHint(CharSequence)
+    
+  >设置输入框的提示语
+
+* hintAnimationEnabled 对应方法 setHintAnimationEnabled(boolean)
+    
+  >开启或关闭hint浮动成标签的动画效果
+  
+* hint 对应方法 setHint(CharSequence)
+    
+  >设置输入框的提示语
+  
+* hintEnabled 对应方法 setHintEnabled(boolean)
+    
+  >开启或关闭hint浮动的功能，设为false的话就和之前的EditText一样，在输入文字后，提示语就消失了
+  
+* hintTextAppearance 对应方法 setHintTextAppearance(int)
+    
+  >设置hint的style，字体颜色，字体大小等，可引用系统自带的也可以自定义。若要使用请统一使用，以保证APP体验的统一性
+  
+__当文本输入类型为密码时，系统提供了一个开关来控制密码是否可见（默认为眼睛👁）。此为design包24.0.2新提供的功能。__
+
+* passwordToggleEnabled 对应方法 setPasswordVisibilityToggleEnabled(boolean)
+    
+  >控制密码可见开关是否启用。设为false则该功能不启用，密码输入框右侧也没有控制密码可见与否的开关
+
+* passwordToggleDrawable 对应方法 setPasswordVisibilityToggleDrawable(Drawable)
+    
+  >设置密码可见开关的图标。通常我们会在不同的情况下设定不同的图标，可通过自定义一个selector，根据“state_checked”属性来控制图标的切换
+  
+* passwordToggleTint 对应方法 setPasswordVisibilityToggleTintList(ColorStateList)
+    
+  >控制密码可见开关图标的颜色。在开启或关闭的状态下我们可以设定不同的颜色，可通过自定义一个color的selector，根据“state_checked”和“state_selected”属性来控制颜色的切换
+  
+* hintEnabled 对应方法 setHintEnabled(boolean)
+    
+  >开启或关闭hint浮动的功能，设为false的话就和之前的EditText一样，在输入文字后，提示语就消失了   
+  
+[TextInputLayout详解](https://zhuanlan.zhihu.com/p/22402340)
 ### 学习资料               
 [Material Design之 AppbarLayout 开发实践总结](http://www.jianshu.com/p/ac56f11e7ce1)    
 [玩转AppBarLayout，更酷炫的顶部栏](http://blog.csdn.net/huachao1001/article/details/51558835)    
