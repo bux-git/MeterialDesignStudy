@@ -7,8 +7,9 @@
             android:icon="@android:drawable/ic_delete"
             android:title="AppbarActivity"></item>
         <item
+            android:id="@+id/CollapsingToolbarLayout"
             android:icon="@android:drawable/ic_menu_save"
-            android:title="Start"></item>
+            android:title="CollapsingToolbarLayout"></item>
         <item
             android:icon="@drawable/ic_menu_gallery"
             android:title="Gallery"></item>

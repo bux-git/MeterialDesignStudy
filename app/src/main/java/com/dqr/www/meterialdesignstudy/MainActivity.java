@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.dqr.www.meterialdesignstudy.appbar.AppBarLayout01;
+import com.dqr.www.meterialdesignstudy.collapsingtoolbar.CollapsingTollBarActivity01;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.app_bar:
                         startActivity(new Intent(MainActivity.this, AppBarLayout01.class));
+                        break;
+                    case R.id.CollapsingToolbarLayout:
+                        startActivity(new Intent(MainActivity.this, CollapsingTollBarActivity01.class));
                         break;
                 }
                 return true;

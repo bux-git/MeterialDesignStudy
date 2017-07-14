@@ -4,6 +4,7 @@
 * [**1.官方侧滑菜单DrawerLayout**](#1)
 * [**2.导航栏NavigationView**](#2)
 * [**3.AppbarLayout**](#3)
+* [**4.CollapsingToolbarLayout**](#4)
 
 ## 1
 ## 官方侧滑菜单DrawerLayout 
@@ -216,7 +217,7 @@ __一.概念__
     AppBarLayout是在LinearLayou上加了一些材料设计的概念，它可以让你定制当某个可滚动View的滚动手势发生变化时，其内部的子View实现何种动作   
 __解释:__  
 __1.AppBarLayout内部子View可以和一个可滚动的View的滑动事件产生关联，从而使AppBarLayout内部的子View执行相关联的滑动动作，   
-内部子View可以是Toolbar、任何View或者布局，比如__   
+内部子View可以是Toolbar、任何View或者布局__   
 >注意：AppbarLayout 严重依赖于CoordinatorLayout，必须用于CoordinatorLayout 的直接子View，如果你将AppbarLayout 放在其他的ViewGroup 里面，那么它的这些功能是无效的
 
 __2.AppBarLayout如何与可滚动的View关联:__    
@@ -267,8 +268,51 @@ __6.AppBarLayout常用方法__
 >* setExpanded (boolean expanded, boolean animate)设置AppbarLayout 是展开状态还是折叠状态，animate 参数控制切换到新的状态时是否需要动画
 
 >* setExpanded (boolean expanded) 设置AppbarLayout 是展开状态还是折叠状态,默认有动画
-            
-            
+  
+## 4
+## CollapsingToolbarLayout
+[images](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/collspasingtoolbarlayout01.gif1)
+__一.概念__    
+CollapsingToolbarLayout是用来对Toolbar进行再次包装的ViewGroup，主要是用于实现折叠的App Bar效果。      
+它需要作为AppBarLayout的直接子View，并且需要作为AppBarLayout的关联滑动View   
+
+CollapsingToolbarLayout包含以下功能：  
+
+* 1.Collapsing title(折叠标题) 当布局全部可见的时候，title 是最大的，当布局开始滑出屏幕，title 将变得越来越小，你可以通过setTitle（CharSequence） 来设置要显示的标题
+
+
+    >注意：Toolbar 和CollapsingToolbarLayout 同时设置了title时，不会显示Toolbartitle而是显示CollapsingToolbarLayout 的title，如果要显示Toolbar 的title，你可一在代码中添加如下代码：collapsingToolbarLayout.setTitle("");
+    
+* 2.Content scrim(内容纱布) 当CollapsingToolbarLayout滑动到一个确定的阀值时将显示或者隐藏内容纱布，可以通过setContentScrim(Drawable)来设置纱布的图片。
+ 
+ >提醒：纱布可以是图片也可以是颜色色值，如果要显示颜色，在xml 布局文件中用contentScrim属性添加，代码如下：
+ app:contentScrim="@color/colorPrimary" 
+ 
+* 3.Status bar scrim（状态栏纱布） 当CollapsingToolbarLayout滑动到一个确定的阀值时，状态栏显示或隐藏纱布，你可以通过setStatusBarScrim(Drawable)来设置纱布图片。
+ 
+ >注意：同内容纱布一样，状态栏纱布可以是图片也可以是一个颜色值，如果要显示颜色值，在xml 中用statusBarScrim 属性指定。
+ 
+* 4.Parallax scrolling children（有视差地滚动子View） 让CollapsingToolbarLayout 的子View 可以有视差的滚动，需要在xml中用 添加如下代码：
+ 
+ >app:layout_collapseMode="parallax"
+ 
+* 5.Pinned position children（固定子View的位置）子View可以固定在全局空间内，这对于实现了折叠并且允许通过滚动布局来固定Toolbar 这种情况非常有用。在xml 中将collapseMode设为pin，代码如下：
+ 
+ > app:layout_collapseMode="pin"
+ 
+* 其他属性： 
+
+    >collapsedTitleGravity：折叠时Toolbar标题位置   
+    expandedTitleGravity:展开时Toolbar标题位置     
+    titleEnabled：滑动时,设置是否应该显示自己的标题。标题将根据滚动偏移而收缩和增长。默认为true
+
+CollapsingToolbarLayout使用时  
+>1.作为AppBarLayout的子View并设置滑动关联动作如: app:layout_scrollFlags="scroll|exitUntilCollapsed"  
+2.根据需求设置自身标题等一些相关属性     
+3.添加Toolbar和其他子View 
+
+
+
 ### 学习资料               
 [Material Design之 AppbarLayout 开发实践总结](http://www.jianshu.com/p/ac56f11e7ce1)    
 [玩转AppBarLayout，更酷炫的顶部栏](http://blog.csdn.net/huachao1001/article/details/51558835)    

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
-        android:theme="@style/AppTheme.NoActionBar">
+                  android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -18,6 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".appbar.AppBarLayout01"/>
+        <activity android:name=".collapsingtoolbar.CollapsingTollBarActivity01"
+                  android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -30,6 +30,27 @@
         <Button android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:text="Button7"/>
+        <Button android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="Button1"/>
+        <Button android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="Button2"/>
+        <Button android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="Button3"/>
+        <Button android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="Button4"/>
+        <Button android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="Button5"/>
+        <Button android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="Button6"/>
+        <Button android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="Button7"/>
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
