@@ -1,8 +1,11 @@
 package com.dqr.www.meterialdesignstudy.appbar;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -23,6 +26,8 @@ public class AppBarLayout01 extends AppCompatActivity {
     AppBarLayout.LayoutParams  appParams;
     View appChildScrollView;
     AppBarLayout mAppBarLayout;
+    private boolean forbidAppBarScroll;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +43,28 @@ public class AppBarLayout01 extends AppCompatActivity {
             }
         });
 
-
+        //禁止滑动
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setAppBarDragCallback(new AppBarLayout.Behavior.DragCallback() {
+                    @Override
+                    public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+                        return false;
+                    }
+                });
+            }
+        }, 1000);
 
     }
 
+
+
+    private void setAppBarDragCallback(AppBarLayout.Behavior.DragCallback dragCallback) {
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
+        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        behavior.setDragCallback(dragCallback);
+    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {

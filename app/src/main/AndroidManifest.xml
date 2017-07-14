@@ -20,7 +20,8 @@
         <activity android:name=".appbar.AppBarLayout01"/>
         <activity android:name=".collapsingtoolbar.CollapsingTollBarActivity01"
                   android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".others.OthersActivity"/>
+        <activity android:name=".others.TextInputLayoutActivity"/>
+        <activity android:name=".others.SnackBarActivity"/>
     </application>
 
 </manifest>

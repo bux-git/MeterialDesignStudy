@@ -270,6 +270,21 @@ __6.AppBarLayout常用方法__
 
 >* setExpanded (boolean expanded) 设置AppbarLayout 是展开状态还是折叠状态,默认有动画
   
+__特殊场景__
+>禁止单独触摸AppBarLayout而滑动展开AppBarLayout
+
+    CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+     AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+     
+     behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+         @Override
+         public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+             return false;
+         }
+     });
+     通过总是返回 false ，您滚动 view 不会再由 ABL 控制。
+     
+     注︰之前调用此你应该检查， ViewCompat.isLaidOut(appBarLayout) ，否则为 params.getBehavior() 将返回 null。
 ## 4
 ## CollapsingToolbarLayout
 [imageshttps://github.com/bux-git/MeterialDesignStudy/raw/master/imges/collspasingtoolbarlayout01.gif1)
@@ -314,7 +329,7 @@ CollapsingToolbarLayout使用时
 
 ## 5
 ## TextInputLayout
-
+![imgshttps://github.com/bux-git/MeterialDesignStudy/raw/master/imges/textinputlayout01.gif1)  
 __1.概念__  
 TextInputLayout 将EditText包裹起来能够辅助EditText实现一些如hint 以浮动标签的形式显示出来，同时可以通过setErrorEnabled(boolean)和setError(CharSequence)来显示错误信息等   
 每一个TextInputLayout中只能有一个EditText

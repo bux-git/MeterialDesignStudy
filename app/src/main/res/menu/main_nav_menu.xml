@@ -11,12 +11,13 @@
             android:icon="@android:drawable/ic_menu_save"
             android:title="CollapsingToolbarLayout"></item>
         <item
-            android:id="@+id/others"
+            android:id="@+id/TextInputLayout"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Others"></item>
+            android:title="TextInputLayout"></item>
         <item
+            android:id="@+id/snackbar"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Manage"></item>
+            android:title="snackbar"></item>
         <item
             android:icon="@drawable/ic_menu_send"
             android:title="Send"></item>

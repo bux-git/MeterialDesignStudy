@@ -14,7 +14,7 @@ import com.dqr.www.meterialdesignstudy.R;
  * Date： 2017-07-14 10:27
  */
 
-public class OthersActivity extends AppCompatActivity implements View.OnClickListener {
+public class TextInputLayoutActivity extends AppCompatActivity implements View.OnClickListener {
     TextInputLayout mTlLayout;
 
     @Override
