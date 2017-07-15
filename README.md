@@ -404,14 +404,14 @@ __一.概念__
 __二.使用方法__  
 >Snackbar用法：Snackbarmake(@NonNull View view, @NonNull CharSequence text,@Duration int duration).show();     
 __View:__
-    >SnackBar显示，它需要有一个View来承载SnackBar会遍历整个View Tree来找到一个合适的View承载SnackBar的View，     
+>>SnackBar显示，它需要有一个View来承载SnackBar会遍历整个View Tree来找到一个合适的View承载SnackBar的View，     
     如果你想要实现上面的动画交互效果的话最好是在布局中包括CoordinatorLayout，假如你的布局中不包括CoordinatorLayout是不会有动画效果的      
 
 >__text:__   
-    >SnackBar显示文字
+>>SnackBar显示文字
 
 >__duration__
-    >有三种状态：  
+>>有三种状态：  
      Snackbar.LENGTH_SHORT// 短时间显示，然后自动取消   
      Snackbar.LENGTH_LONG// 长时间显示，然后自动取消    
      Snackbar.LENGTH_INDEFINITE// 不消失显示，除非手动取消  
