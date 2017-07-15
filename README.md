@@ -6,11 +6,11 @@
 * [**3.AppbarLayout**](#3)
 * [**4.CollapsingToolbarLayout**](#4)
 * [**5.TextInputLayout**](#5)
-
+* [**6.SnackBar**](#6)
 ## 1
 ## 官方侧滑菜单DrawerLayout 
 
-![imgshttps://github.com/bux-git/MeterialDesignStudy/raw/master/imges/drawerlayout01.gif1)     
+`![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/drawerlayout01.gif1)     `
 
 __一.概念__    
     DrawerLayout其实是一个布局控件，跟LinearLayout等控件是一种东西，但是drawerLayout带有滑动的功能。只要按照drawerLayout的规定布局方式写完布局，就能有侧滑的效果
@@ -211,7 +211,7 @@ __三.常用属性__
     app:itemTextColor=""  item 文字颜色
 ## 3
 #### AppBarLayout
-![imgshttps://github.com/bux-git/MeterialDesignStudy/raw/master/imges/appbarlayout01.gif1)  
+`![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/appbarlayout01.gif1)  `
 __一.概念__    
 
     AppBarLayout继承自LinearLayout，布局方向为垂直方向。所以你可以把它当成垂直布局的LinearLayout来使用。
@@ -287,7 +287,7 @@ __特殊场景__
      注︰之前调用此你应该检查， ViewCompat.isLaidOut(appBarLayout) ，否则为 params.getBehavior() 将返回 null。
 ## 4
 ## CollapsingToolbarLayout
-[imageshttps://github.com/bux-git/MeterialDesignStudy/raw/master/imges/collspasingtoolbarlayout01.gif1)
+`[images](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/collspasingtoolbarlayout01.gif1)`
 __一.概念__    
 CollapsingToolbarLayout是用来对Toolbar进行再次包装的ViewGroup，主要是用于实现折叠的App Bar效果。      
 它需要作为AppBarLayout的直接子View，并且需要作为AppBarLayout的关联滑动View   
@@ -329,7 +329,7 @@ CollapsingToolbarLayout使用时
 
 ## 5
 ## TextInputLayout
-![imgshttps://github.com/bux-git/MeterialDesignStudy/raw/master/imges/textinputlayout01.gif1)  
+`![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/textinputlayout01.gif1)`  
 __1.概念__  
 TextInputLayout 将EditText包裹起来能够辅助EditText实现一些如hint 以浮动标签的形式显示出来，同时可以通过setErrorEnabled(boolean)和setError(CharSequence)来显示错误信息等   
 每一个TextInputLayout中只能有一个EditText
@@ -386,7 +386,93 @@ __当文本输入类型为密码时，系统提供了一个开关来控制密码
     
   >开启或关闭hint浮动的功能，设为false的话就和之前的EditText一样，在输入文字后，提示语就消失了   
   
-[TextInputLayout详解](https://zhuanlan.zhihu.com/p/22402340)
+[TextInputLayout详解](https://zhuanlan.zhihu.com/p/22402340)  
+
+
+## 6
+## SnackBar
+__一.概念__  
+
+>Snackbar 是一种针对操作的轻量级反馈机制，常以一个小的弹出框的形式，出现在手机屏幕下方或者桌面左下方。它们出现在屏幕所有层的最上方，包括浮动操作按钮。
+它们会在超时或者用户在屏幕其他地方触摸之后自动消失。Snackbar 可以在屏幕上滑动关闭。当它们出现时，不会阻碍用户在屏幕上的输入，并且也不支持输入。屏幕上同时最多只能现实一个 Snackbar。 
+
+>综上所述:
+>1.SnackBar可以自动消失，也可以手动取消   
+2.SnackBar可以通过setAction（）来与用户进行交互   
+3.通过CallBack我们可以获取SnackBar的状态   
+
+__二.使用方法__  
+>Snackbar用法：Snackbarmake(@NonNull View view, @NonNull CharSequence text,@Duration int duration).show();     
+__View:__
+    >SnackBar显示，它需要有一个View来承载SnackBar会遍历整个View Tree来找到一个合适的View承载SnackBar的View，     
+    如果你想要实现上面的动画交互效果的话最好是在布局中包括CoordinatorLayout，假如你的布局中不包括CoordinatorLayout是不会有动画效果的      
+
+>__text:__   
+    >SnackBar显示文字
+
+>__duration__
+    >有三种状态：  
+     Snackbar.LENGTH_SHORT// 短时间显示，然后自动取消   
+     Snackbar.LENGTH_LONG// 长时间显示，然后自动取消    
+     Snackbar.LENGTH_INDEFINITE// 不消失显示，除非手动取消  
+     
+     
+>__make方法源码：__
+
+    public static Snackbar make(@NonNull View view, @NonNull CharSequence text,
+            @Duration int duration) {
+            
+        Snackbar snackbar = new Snackbar(findSuitableParent(view));
+        snackbar.setText(text);
+        snackbar.setDuration(duration);
+        return snackbar;
+        
+    }
+
+其实这里面的重点就是Snackbarsnackbar =newSnackbar(findSuitableParent(view));  
+  我们可以看到我们传入的view经过了    
+    findSuitableParent()方法的包装。  
+    
+__这个方法主要的作用是：__     
+
+>1.当传入的View不为空时，如果我们在布局中发现了CoordinatorLayout布局，那么返回的View就是CoordinatorLayout；     
+
+>2.如果没有CoordinatorLayout布局，我们就先找到一个id为android.R.id.content的FrameLayout（这个布局是最底层的根布局），    
+    将View设置为该FrameLayout；   
+    
+>3.其他情况下就使用View的Parent布局一直到这个View不为空。    
+
+                //获取实例
+                Snackbar snackbar= Snackbar.make(mBtnShow,"测试",Snackbar.LENGTH_LONG);
+                //设置右侧点击事件
+                snackbar.setAction("编辑", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(SnackBarActivity.this,"点击",Toast.LENGTH_SHORT).show();
+                    }
+                });
+                //设置点击文字颜色
+                snackbar.setActionTextColor(getResources().getColor(R.color.black));
+                //设置SnackBar 背景颜色
+                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                //添加显示与消失监听
+                snackbar.addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                    @Override
+                    public void onDismissed(Snackbar transientBottomBar, int event) {
+                        super.onDismissed(transientBottomBar, event);
+                    }
+
+                    @Override
+                    public void onShown(Snackbar transientBottomBar) {
+                        super.onShown(transientBottomBar);
+                    }
+                });
+                //显示SnackBar
+                snackbar.show();
+               
+[Snackbars 与 Toasts](http://wiki.jikexueyuan.com/project/material-design/components/snackbars-and-toasts.html)  
+[SnackBar使用详解](http://blog.csdn.net/u013320868/article/details/51906896)
+
 ### 学习资料               
 [Material Design之 AppbarLayout 开发实践总结](http://www.jianshu.com/p/ac56f11e7ce1)    
 [玩转AppBarLayout，更酷炫的顶部栏](http://blog.csdn.net/huachao1001/article/details/51558835)    
