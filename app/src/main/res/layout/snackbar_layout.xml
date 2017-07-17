@@ -5,14 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <Button
-        android:id="@+id/btn_show"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="show"/>
+
+    <include layout="@layout/app_bar_scroll_layout"
+    android:id="@+id/scroll_list"></include>
+
+
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"/>
+        app:layout_anchor="@id/scroll_list"
+        app:layout_anchorGravity="bottom|right"
+        android:src="@drawable/ic_ecard_model_btn"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        app:fabSize="normal"
+        android:onClick="onClick"/>
 </android.support.design.widget.CoordinatorLayout>
