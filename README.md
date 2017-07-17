@@ -7,6 +7,7 @@
 * [**4.CollapsingToolbarLayout**](#4)
 * [**5.TextInputLayout**](#5)
 * [**6.SnackBar**](#6)
+* [**6.FloatingActionButton**](#7)
 ## 1
 ## 官方侧滑菜单DrawerLayout 
 
@@ -471,7 +472,12 @@ __这个方法主要的作用是：__
                 snackbar.show();
                
 [Snackbars 与 Toasts](http://wiki.jikexueyuan.com/project/material-design/components/snackbars-and-toasts.html)  
-[SnackBar使用详解](http://blog.csdn.net/u013320868/article/details/51906896)
+[SnackBar使用详解](http://blog.csdn.net/u013320868/article/details/51906896)    
+
+## 7
+## FloatingActionButton 
+[浅谈FloatingActionButton(悬浮按钮)](http://www.cnblogs.com/xqxacm/p/5852783.html)    
+[浮动操作按钮详解](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0718/3197.html)
 
 ### 学习资料               
 [Material Design之 AppbarLayout 开发实践总结](http://www.jianshu.com/p/ac56f11e7ce1)    

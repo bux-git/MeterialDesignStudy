@@ -19,10 +19,6 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="snackbar FAB"></item>
         <item
-            android:id="@+id/floating_action_button"
-            android:icon="@drawable/ic_menu_send"
-            android:title="FloatingActionButton"></item>
-        <item
             android:icon="@drawable/ic_menu_share"
             android:title="Share"></item>
         <item  android:title="sub item">
