@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.snackbar:
                         startActivity(new Intent(MainActivity.this, SnackBarActivity.class));
                         break;
+
                 }
                 return true;
             }

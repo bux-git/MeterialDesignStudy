@@ -17,10 +17,11 @@
         <item
             android:id="@+id/snackbar"
             android:icon="@drawable/ic_menu_manage"
-            android:title="snackbar"></item>
+            android:title="snackbar FAB"></item>
         <item
+            android:id="@+id/floating_action_button"
             android:icon="@drawable/ic_menu_send"
-            android:title="Send"></item>
+            android:title="FloatingActionButton"></item>
         <item
             android:icon="@drawable/ic_menu_share"
             android:title="Share"></item>
