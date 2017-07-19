@@ -17,6 +17,7 @@ import android.view.View;
 
 import com.dqr.www.meterialdesignstudy.appbar.AppBarLayout01;
 import com.dqr.www.meterialdesignstudy.collapsingtoolbar.CollapsingTollBarActivity01;
+import com.dqr.www.meterialdesignstudy.coordinatorlayout.CoordinatorLayoutActivity;
 import com.dqr.www.meterialdesignstudy.others.SnackBarActivity;
 import com.dqr.www.meterialdesignstudy.others.TextInputLayoutActivity;
 
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.snackbar:
                         startActivity(new Intent(MainActivity.this, SnackBarActivity.class));
+                        break;
+                    case R.id.CoordinatorLayout:
+                        startActivity(new Intent(MainActivity.this, CoordinatorLayoutActivity.class));
                         break;
 
                 }

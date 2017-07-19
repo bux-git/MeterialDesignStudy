@@ -8,6 +8,7 @@
 * [**5.TextInputLayout**](#5)
 * [**6.SnackBar**](#6)
 * [**6.FloatingActionButton**](#7)
+* [**7.CoordinatorLayout**](#8)
 ## 1
 ## 官方侧滑菜单DrawerLayout 
 
@@ -232,7 +233,7 @@ __2.AppBarLayout如何与可滚动的View关联:__
        <!--将你的内容放在这里-->
     </android.support.v4.widget.NestedScrollView>
 
->属性：app:layout_behavior="@string/appbar_scrolling_view_behavior",它就是将此View与AppBarLayout关联，指定Behavior的，appbar_scrolling_view_behavior对应的类的名称是：android.support.design.widget.AppBarLayout$ScrollingViewBehavior
+>属性：app:layout_behavior="@string/appbar_scrolling_view_behavior"是CoordinatorLayout的布局属性,它能够将此View与AppBarLayout关联，指定Behavior的，appbar_scrolling_view_behavior对应的类的名称是：android.support.design.widget.AppBarLayout$ScrollingViewBehavior
 
 __3.AppBarLayout可以与那些View关联__   
 >__3.1,根据概念首先这个View必须是可以滚动的如ScrollView RecyclerView等     
@@ -477,14 +478,46 @@ __这个方法主要的作用是：__
 ## 7
 ## FloatingActionButton 
 [浅谈FloatingActionButton(悬浮按钮)](http://www.cnblogs.com/xqxacm/p/5852783.html)    
-[浮动操作按钮详解](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0718/3197.html)
+[浮动操作按钮详解](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0718/3197.html)   
+## 8
+## CoordinatorLayout    
+__一.概念__    
+译为：协调者布局    
+>1.首先可以理解Coordinatorlayout是一个FrameLayout升级版本 ，其内部子View的布局位置可以FrameLayout一样  
+使用layout_gravity来确定位置
+
+>2.Coordinatorlayout Gravity的两个属性 layout_anchor ,layout_anchorGravity   
+>>layout_anchor:为子View设置一个参照View，子View的位置将参照这个参照View来显示     
+>>layout_anchorGravity:用来设置子View相对于参照View的位置
+
+>3.重要功能：CoordinatorLayout可以用来协调其子view之间动作的交互     
+如：协调滑动控件和AppBarLayout之间的交互等等，  
+CoordinatorLayout 实现子View之间的交互是靠Behavior来实现的        
+
+
+__二.使用__    
+CoordinatorLayout子View之间是如何协调的： 
+>1.根据前面与：    
+       3.AppbarLayout  
+       4.CollapsingToolbarLayout  
+       5.TextInputLayout  
+       6.SnackBar  
+       6.FloatingActionButton  
+       等使用的情况，子View之间相互协调是通过CoordinatorLayout的布局属性app:layout_behavior来设置的   
+       layout_behavior 属性定义了这个View如何和其他View互相交互的行为, 其值填写的是一个class的名字(全称带包名) 
+       这个值指定的类必须是 CoordinatorLayout.Behavior<V> 的子类, 我们也可以自定义一个该类继承于它, 以此来写自己想要的交互效果.   
+       
+__三.重点__
 
 ### 学习资料               
 [Material Design之 AppbarLayout 开发实践总结](http://www.jianshu.com/p/ac56f11e7ce1)    
 [玩转AppBarLayout，更酷炫的顶部栏](http://blog.csdn.net/huachao1001/article/details/51558835)    
 [CoordinatorLayout, AppBarLayout, CollapsingToolbarLayout使用](http://www.cnblogs.com/mengdd/p/5641187.html)    
-[]()    
-[]()    
-[]()    
-[]()    
+[深入理解CoordinatorLayout](http://www.jianshu.com/p/26439595ffef)    
+[自定义Behavior的艺术探索-仿UC浏览器主页](http://www.jianshu.com/p/f7989a2a3ec2#)    
+[一个神奇的控件——Android CoordinatorLayout与Behavior使用指南](http://www.jianshu.com/p/488283f74e69)    
+[ CoordinatorLayout的使用如此简单](http://blog.csdn.net/huachao1001/article/details/51554608)    
+
+
+
 [回到顶部](#目录) 

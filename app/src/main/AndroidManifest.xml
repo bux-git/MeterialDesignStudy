@@ -22,6 +22,7 @@
                   android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".others.TextInputLayoutActivity"/>
         <activity android:name=".others.SnackBarActivity"/>
+        <activity android:name=".coordinatorlayout.CoordinatorLayoutActivity"/>
     </application>
 
 </manifest>

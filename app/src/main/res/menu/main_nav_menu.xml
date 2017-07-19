@@ -19,8 +19,9 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="snackbar FAB"></item>
         <item
+            android:id="@+id/CoordinatorLayout"
             android:icon="@drawable/ic_menu_share"
-            android:title="Share"></item>
+            android:title="CoordinatorLayout"></item>
         <item  android:title="sub item">
             <menu>
                 <item
