@@ -5,19 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  app:layout_scrollFlags="scroll"/>
+    </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/app_bar_scroll_layout"
-    android:id="@+id/scroll_list"></include>
+    <include android:id="@+id/scroll_list"
+             layout="@layout/app_bar_scroll_layout"></include>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_anchor="@id/scroll_list"
-        app:layout_anchorGravity="bottom|right"
-        android:src="@drawable/ic_ecard_model_btn"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
+        android:onClick="onClick"
+        android:src="@drawable/ic_ecard_model_btn"
         app:fabSize="normal"
-        android:onClick="onClick"/>
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|right"/>
 </android.support.design.widget.CoordinatorLayout>

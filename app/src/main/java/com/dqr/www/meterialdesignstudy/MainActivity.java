@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.CoordinatorLayout:
                         startActivity(new Intent(MainActivity.this, CoordinatorLayoutActivity.class));
                         break;
+                    case R.id.ScrollingActivity:
+                        break;
 
                 }
                 return true;

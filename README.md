@@ -483,14 +483,9 @@ __这个方法主要的作用是：__
 ## CoordinatorLayout    
 __一.概念__    
 译为：协调者布局    
->1.首先可以理解Coordinatorlayout是一个FrameLayout升级版本 ，其内部子View的布局位置可以FrameLayout一样  
-使用layout_gravity来确定位置
+>1.首先可以理解Coordinatorlayout是一个FrameLayout升级版本 
 
->2.Coordinatorlayout Gravity的两个属性 layout_anchor ,layout_anchorGravity   
->>layout_anchor:为子View设置一个参照View，子View的位置将参照这个参照View来显示     
->>layout_anchorGravity:用来设置子View相对于参照View的位置
-
->3.重要功能：CoordinatorLayout可以用来协调其子view之间动作的交互     
+>2.重要功能：CoordinatorLayout可以用来协调其子view之间动作的交互     
 如：协调滑动控件和AppBarLayout之间的交互等等，  
 CoordinatorLayout 实现子View之间的交互是靠Behavior来实现的        
 
@@ -500,14 +495,40 @@ CoordinatorLayout子View之间是如何协调的：
 >1.根据前面与：    
        3.AppbarLayout  
        4.CollapsingToolbarLayout  
-       5.TextInputLayout  
        6.SnackBar  
        6.FloatingActionButton  
        等使用的情况，子View之间相互协调是通过CoordinatorLayout的布局属性app:layout_behavior来设置的   
        layout_behavior 属性定义了这个View如何和其他View互相交互的行为, 其值填写的是一个class的名字(全称带包名) 
        这个值指定的类必须是 CoordinatorLayout.Behavior<V> 的子类, 我们也可以自定义一个该类继承于它, 以此来写自己想要的交互效果.   
        
-__三.重点__
+__三.Behavior__   
+   
+__1.概述__
+>CoordinatorLayout的诸多功能全部依赖与CoordinatorLayout.Behavior来实现   
+通过为CoordinatorLayout的直接子view设置一个Behavior，就可以拦截touch events, window insets, measurement, layout, 和 nested scrolling等动作。      
+Design Library大量利用了Behaviors来实现你所看到的功能
+
+__2.Behavior的创建__
+>2.1、创建behavior,需要继承 [CoordinatorLayout.Behavior](https://developer.android.google.cn/reference/android/support/design/widget/CoordinatorLayout.Behavior.html)
+或其子View
+>>  
+
+    public class FollowUpDownBehavior extends CoordinatorLayout.Behavior {
+    
+      public FollowUpDownBehavior(Context context, AttributeSet attrs) {
+          super(context, attrs);
+  
+        }
+    }
+>>这样就可以将这个Behavior设置给任何View,如果只想设置给某一些特定类型的View则可以传入泛型如:  
+
+    FollowUpDownBehavior extends CoordinatorLayout.Behavior<Button>
+__3.设置Behavior__    
+设置Behavior一共有3种方式:  
+>3.1 在代码中设置Behavior     
+>>
+>3.2 在XML中设置        
+>3.3 在View类上添加默认的Behavior   
 
 ### 学习资料               
 [Material Design之 AppbarLayout 开发实践总结](http://www.jianshu.com/p/ac56f11e7ce1)    

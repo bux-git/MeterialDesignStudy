@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -18,11 +19,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".appbar.AppBarLayout01"/>
-        <activity android:name=".collapsingtoolbar.CollapsingTollBarActivity01"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".collapsingtoolbar.CollapsingTollBarActivity01"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".others.TextInputLayoutActivity"/>
         <activity android:name=".others.SnackBarActivity"/>
         <activity android:name=".coordinatorlayout.CoordinatorLayoutActivity"/>
+        <activity
+            android:name=".others.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

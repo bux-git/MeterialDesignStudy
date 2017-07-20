@@ -4,17 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <Button
-        android:id="@+id/btn1"
+    <Button android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="跟随移动的View"
+            app:layout_behavior="com.dqr.www.meterialdesignstudy.coordinatorlayout.behavior.BtnTestBehavior"/>
+
+    <com.dqr.www.meterialdesignstudy.coordinatorlayout.behavior.TempView
+        android:id="@+id/moveView"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:text="btn 1"/>
-    <Button
-        android:id="@+id/btn2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_anchor="@id/btn1"
-        app:layout_anchorGravity="end|bottom"
-        android:text="btn 2"/>
+        android:background="@color/colorAccent"/>
+    <View android:layout_width="50dp"
+          android:layout_height="20dp"
+          android:background="@color/black"
+          app:layout_behavior="com.dqr.www.meterialdesignstudy.coordinatorlayout.behavior.FollowUpDownBehavior"
+          app:target="@id/moveView"></View>
+
 </android.support.design.widget.CoordinatorLayout>
