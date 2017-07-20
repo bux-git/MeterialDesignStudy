@@ -37,10 +37,12 @@ public class FollowUpDownBehavior extends CoordinatorLayout.Behavior {
 
         }
 
+
     }
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
+
         return dependency.getId()==target;
     }
 

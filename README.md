@@ -526,9 +526,30 @@ __2.Behavior的创建__
 __3.设置Behavior__    
 设置Behavior一共有3种方式:  
 >3.1 在代码中设置Behavior     
->>
+>>CoordinatorLayout.LayoutParam中可以存储Behavior布局属性,所以在代码中：
+
+        FollowUpDownBehavior behavior = new FollowUpDownBehavior();
+        CoordinatorLayout.LayoutParams layoutParams= (CoordinatorLayout.LayoutParams) view.getLayoutParams();
+        view.setLayoutParams(layoutParams);
+
 >3.2 在XML中设置        
+>>在xml布局中直接设置属性值    
+
+    <View android:layout_width="50dp"
+          android:layout_height="20dp"
+          android:background="@color/black"
+          app:layout_behavior="com.dqr.www.meterialdesignstudy.coordinatorlayout.behavior.FollowUpDownBehavior"
+          app:target="@id/moveView"></View>
+>>在XML设置属性，初始化Behavior时，是使用的FollowUpDownBehavior(Context context, AttributeSet attrs)   
+两个参数的构造函数,有传入AttributeSet所以可以自定义一些属性然后在xml中设置，Behavior中接收并使用，   
+如app:target属性设置一个目标ID   
 >3.3 在View类上添加默认的Behavior   
+>>在自定义View时我们希望这个View自带一个Behavior，而不需要去另外设置，我们可以在自定义View类上设置    
+注释:
+
+    @CoordinatorLayout.DefaultBehavior(BtnTestBehavior.class)
+    public class TempView extends View {
+    }
 
 ### 学习资料               
 [Material Design之 AppbarLayout 开发实践总结](http://www.jianshu.com/p/ac56f11e7ce1)    
