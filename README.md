@@ -552,8 +552,446 @@ __3.设置Behavior__
     @CoordinatorLayout.DefaultBehavior(BtnTestBehavior.class)
     public class TempView extends View {
     }
+  
+## 8
+## CoordinatorLayout    
+__一.概念__    
+译为：协调者布局    
+>1.首先可以理解Coordinatorlayout是一个FrameLayout升级版本 
 
-__Behavior的四大功能__
+>2.重要功能：CoordinatorLayout可以用来协调其子view之间动作的交互     
+如：协调滑动控件和AppBarLayout之间的交互等等，  
+CoordinatorLayout 实现子View之间的交互是靠Behavior来实现的        
+
+
+__二.使用__    
+CoordinatorLayout子View之间是如何协调的： 
+>1.根据前面与：    
+       3.AppbarLayout  
+       4.CollapsingToolbarLayout  
+       6.SnackBar  
+       6.FloatingActionButton  
+       等使用的情况，子View之间相互协调是通过CoordinatorLayout的布局属性app:layout_behavior来设置的   
+       layout_behavior 属性定义了这个View如何和其他View互相交互的行为, 其值填写的是一个class的名字(全称带包名) 
+       这个值指定的类必须是 CoordinatorLayout.Behavior<V> 的子类, 我们也可以自定义一个该类继承于它, 以此来写自己想要的交互效果.   
+       
+__三.Behavior__   
+   
+__1.概述__
+>CoordinatorLayout的诸多功能全部依赖与CoordinatorLayout.Behavior来实现   
+通过为CoordinatorLayout的直接子view设置一个Behavior，CoordinatorLayout会遍历一遍自己的直接子View，      
+一个一个的调用子view中的Behavio就可以拦截touch events, window insets, measurement, layout, 和 nested scrolling等动作。      
+Design Library大量利用了Behaviors来实现你所看到的功能
+
+__2.Behavior的创建__
+>2.1、创建behavior,需要继承 [CoordinatorLayout.Behavior](https://developer.android.google.cn/reference/android/support/design/widget/CoordinatorLayout.Behavior.html)
+或其子View
+>>  
+
+    public class FollowUpDownBehavior extends CoordinatorLayout.Behavior {
+    
+      public FollowUpDownBehavior(Context context, AttributeSet attrs) {
+          super(context, attrs);
+  
+        }
+    }
+>>这样就可以将这个Behavior设置给任何View,如果只想设置给某一些特定类型的View则可以传入泛型如:  
+
+    FollowUpDownBehavior extends CoordinatorLayout.Behavior<Button>
+__3.设置Behavior__    
+设置Behavior一共有3种方式:  
+>3.1 在代码中设置Behavior     
+>>CoordinatorLayout.LayoutParam中可以存储Behavior布局属性,所以在代码中：
+
+        FollowUpDownBehavior behavior = new FollowUpDownBehavior();
+        CoordinatorLayout.LayoutParams layoutParams= (CoordinatorLayout.LayoutParams) view.getLayoutParams();
+        view.setLayoutParams(layoutParams);
+
+>3.2 在XML中设置        
+>>在xml布局中直接设置属性值    
+
+    <View android:layout_width="50dp"
+          android:layout_height="20dp"
+          android:background="@color/black"
+          app:layout_behavior="com.dqr.www.meterialdesignstudy.coordinatorlayout.behavior.FollowUpDownBehavior"
+          app:target="@id/moveView"></View>
+>>在XML设置属性，初始化Behavior时，是使用的FollowUpDownBehavior(Context context, AttributeSet attrs)   
+两个参数的构造函数,有传入AttributeSet所以可以自定义一些属性然后在xml中设置，Behavior中接收并使用，   
+如app:target属性设置一个目标ID   
+
+
+>3.3 在View类上添加默认的Behavior   
+>>在自定义View时我们希望这个View自带一个Behavior，而不需要去另外设置，我们可以在自定义View类上设置    
+注释:
+
+    @CoordinatorLayout.DefaultBehavior(BtnTestBehavior.class)
+    public class TempView extends View {
+    }
+
+__Behavior的功能__     
+
+__1.拦截Touch Events__    
+>CoordinatorLayout会在他的onInterceptTouchEvent()中将事件MotionEvent传递到子View的    
+Behavior.onInterceptTouchEvent()中，让Behavior也可以拦截触摸事件,   
+如果Behavior.onInterceptTouchEvent()返回true,则Behavior.onTouchEvent()将会收到   
+后续触摸事件，而View将不会收到后续的触摸事件    
+
+CoordinatorLayout的事件分发过程
+>>首先ViewGroup/View 的事件分派, 事件分派是有两个过程的:  [深入理解CoordinatorLayout原文](http://www.jianshu.com/p/26439595ffef)    
+
+>>捕获过程：从根元素到子元素依次调用onInterceptTouchEvent,检测是否有View要拦截触摸事件 
+如果有View拦截了立即进入冒泡过程，否则一直传递到最末尾的元素再进入到冒泡过程.   
+
+>>冒泡过程:从底层往上冒泡,一次调用onTouchEvent,如果有View消耗了事件,则不再继续向上传递，否则一直传递 
+到根元素.
+
+>CoordinatorLayout事件分发  
+>>CoordinatorLayout在他的onInterceptTouchEvent中去遍历所有的子View,并调用子View的Behavior.onInterceptTouchEvent方法 
+如果在Behavior.onInterceptTouchEvent方法中返回了true拦截了该事件，则该Behavior就可以在onTouchEvent    
+中处理触摸事件，而这个Behavior对应的View将不会收到触摸时间 
+
+>这样的设置可以使得处理例如手势的逻辑可以完全从具体的某个View解耦出来，可以给不同的View设置相同的   
+Behavior来获得处理相同手势的功能，代码复用率极高.   
+
+__2.子View之间的依赖__       
+>Behaviors的强大之处在于在View之间建立依赖关系－当另一个View改变的时候，你的Behavior会得到一个callback，根据外部条件改变它的功能    
+
+在 CoordinatorLayout.LayoutParams 中定义了一个View是否依赖( dependsOn ) 另一个View:
+
+    boolean dependsOn(CoordinatorLayout parent, View child, View dependency) {
+        return dependency == mAnchorDirectChild
+                || (mBehavior != null && mBehavior.layoutDependsOn(parent, child, dependency));
+    }
+
+
+Behaviors依赖于View有两种形式:
+>>1.在Behavior.layoutDependsOn()中返回true  
+>>2.使用CoordinatorLayout的layout_anchor 属性之时。它和layout_anchorGravity 属性结合，可以让你有效的把两个View捆绑在一起。比如，你可以把一个FloatingActionButton锚定在一个AppBarLayout上，那么如果AppBarLayout滚动出屏幕，FloatingActionButton.Behavior将使用隐式的依赖去隐藏FAB    
+
+>View之间关联之后，当依赖View被移除的时候，将会回调Behavior.onDependentViewRemoved() 
+ 当依赖的View发生变化的时候（比如：调整大小或者重置自己的position），得到回调 onDependentViewChanged()  
+ 我们可以在这2个方法中处理关于自身View的一些事情     
+ >>这个把View绑定在一起的能力正是Design Library那些酷炫功能的工作原理   
+ －以FloatingActionButton与Snackbar之间的交互为例。FAB的 Behavior依赖于被添加到CoordinatorLayout的Snackbar，.
+ 然后它使用onDependentViewChanged()  callback来将FAB向上移动，以避免和Snackbar重叠。
+
+CoordinatorLayout的三个子View A B  C之间的依赖可以有如下几种:           
+* 可以 多个View同时依赖同一个View: B C 同时依赖A     
+* 被依赖的View可以继续依赖其他View A 依赖B  B 依赖C       
+* 也可以单独依赖 A 依赖 B          
+* 但是不能循环依赖 ：A 依赖B  B 依赖C C依赖A         
+
+
+
+__3.嵌套滚动__  
+NestedScrolling 是Android提供的一套父View和子View交互滑动机制.     
+完成这样的交互 需要父View实现NestedScrollingParent接口,子View实现NestedScrollingChild接口      
+同时系统也提供了2辅助类来帮助处理子View和父View交互的大部分逻辑：   
+>NestedScrollingParent--->NestedScrollingParentHelper   
+>NestedScrollingChild--->NestedScrollingChildHelper     
+
+__NestedScrollingChild & NestedScrollingChildHelper__    
+
+    public interface NestedScrollingChild {  
+      
+        /** 
+         * 设置嵌套滑动是否可用 
+         * 
+         * @param enabled 
+         */  
+        public void setNestedScrollingEnabled(boolean enabled);  
+      
+        /** 
+         * 嵌套滑动是否可用 
+         * 
+         * @return 
+         */  
+        public boolean isNestedScrollingEnabled();  
+      
+        /** 
+         * 开启整个嵌套滑动流程,通知父View一起处理TouchEvent事件
+         * 
+         * @param axes 表示方向 有一下两种值 
+         *             ViewCompat.SCROLL_AXIS_HORIZONTAL 水平方向滑动 
+         *             ViewCompat.SCROLL_AXIS_VERTICAL 纵向滑动 
+         * @return 父View是否支持嵌套滑动
+         */  
+        public boolean startNestedScroll(int axes);  
+      
+        /** 
+         * 结束嵌套滑动流程
+         */  
+        public void stopNestedScroll();  
+      
+        /** 
+         * 是否有父View 支持 嵌套滑动,  会一层层的往上寻找父View 
+         * @return 
+         */  
+        public boolean hasNestedScrollingParent();  
+      
+        /** 
+         * 向父view汇报滚动情况，包括子view消费的部分和子view没有消费的部分。
+         * 如果父view接受了它的滚动参数，进行了部分消费，则这个函数返回true，否则为false。
+         * 这个函数一般在子view处理scroll后调用。
+           
+         * @param dxConsumed x轴上 被父View消费的距离 
+         * @param dyConsumed y轴上 被父View消费的距离 
+         * @param dxUnconsumed x轴上 未被消费的距离 
+         * @param dyUnconsumed y轴上 未被消费的距离 
+         * @param offsetInWindow view 的移动距离 
+         * @return 
+         */  
+        public boolean dispatchNestedScroll(int dxConsumed, int dyConsumed,  
+                                            int dxUnconsumed, int dyUnconsumed, int[] offsetInWindow);  
+      
+        /** 
+         * 在子View的onInterceptTouchEvent或者onTouch中(一般在MontionEvent.ACTION_MOVE事件里)，
+         * 调用该方法将子View此次滑动的距离通知给父View做处理
+         * @param dx x 轴上滑动的距离, 相对于上一次事件, 不是相对于 down事件的 那个距离 
+         * @param dy y 轴上滑动的距离 
+         * @param consumed 数组 输出参数,返回父View消耗掉的滑动长度
+         *  如果传入不为null，cosumed[0]表示父View在X方向上消费掉的Scroll距离
+         *  cosumes[1]表示父View在Y方向上消费掉的scroll距离
+         *  如果这两个值不为0，则子view需要对滚动的量进行一些修正
+         * @param offsetInWindow   支持嵌套滑动到额父View 消费 滑动事件后 导致 本 View 的移动距离 
+         * @return 如果父View 接收了滚动参数，并进行了消费，则返回true 否则为false
+         这个函数一般在子view处理scroll前调用
+         */  
+        public boolean dispatchNestedPreScroll(int dx, int dy, int[] consumed, int[] offsetInWindow);  
+      
+        /** 
+         * 
+         * @param velocityX x 轴上的滑动速度 
+         * @param velocityY y 轴上的滑动速度 
+         * @param consumed 是否被消费 
+         * @return 
+         */  
+        public boolean dispatchNestedFling(float velocityX, float velocityY, boolean consumed);  
+      
+        /** 
+         * 
+         * @param velocityX x 轴上的滑动速度 
+         * @param velocityY y 轴上的滑动速度 
+         * @return 
+         */  
+        public boolean dispatchNestedPreFling(float velocityX, float velocityY);  
+    } 
+使用: 
+
+    public class Child extends ViewGroup implements NestedScrollingChild {  
+      
+        private NestedScrollingChildHelper mNestedScrollingChildHelper;  
+      
+        public Child(Context context, AttributeSet attrs) {  
+            super(context, attrs);  
+            mNestedScrollingChildHelper = new NestedScrollingChildHelper(this);  
+        }  
+      
+        @Override  
+        public void setNestedScrollingEnabled(boolean enabled) {  
+            mNestedScrollingChildHelper.setNestedScrollingEnabled(enabled);  
+        }  
+      
+        @Override  
+        public boolean isNestedScrollingEnabled() {  
+            return mNestedScrollingChildHelper.isNestedScrollingEnabled();  
+        }  
+      
+        @Override  
+        public boolean startNestedScroll(int axes) {  
+            return mNestedScrollingChildHelper.startNestedScroll(axes);  
+        }  
+      
+        @Override  
+        public void stopNestedScroll() {  
+            mNestedScrollingChildHelper.stopNestedScroll();  
+        }  
+      
+        @Override  
+        public boolean hasNestedScrollingParent() {  
+            return mNestedScrollingChildHelper.hasNestedScrollingParent();  
+        }  
+      
+        @Override  
+        public boolean dispatchNestedScroll(int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int[] offsetInWindow) {  
+            return mNestedScrollingChildHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow);  
+        }  
+      
+        @Override  
+        public boolean dispatchNestedPreScroll(int dx, int dy, int[] consumed, int[] offsetInWindow) {  
+            return mNestedScrollingChildHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow);  
+        }  
+      
+        @Override  
+        public boolean dispatchNestedFling(float velocityX, float velocityY, boolean consumed) {  
+            return mNestedScrollingChildHelper.dispatchNestedFling(velocityX, velocityY, consumed);  
+        }  
+      
+        @Override  
+        public boolean dispatchNestedPreFling(float velocityX, float velocityY) {  
+            return mNestedScrollingChildHelper.dispatchNestedPreFling(velocityX, velocityY);  
+        }  
+        
+            /** 
+             *重写这个方法或者onInterceptTouchEvent
+             *在这里面开启嵌套滑动相关方法并处理相关逻辑
+             *具体可以参考现有的RecyclerView NestedScrollView 等
+             *
+             */  
+           @Override
+            public boolean onTouchEvent(MotionEvent e) { 
+                1.startNestedScroll(nestedScrollAxis);
+                2.dispatchNestedPreScroll(dx, dy, mScrollConsumed, mScrollOffset);
+                3.stopNestedScroll();
+             
+                return super.onTouchEvent(e);
+            }
+        
+    }  
+    
+ __NestedScrollingParent & NestedScrollingParentHelper__    
+     
+     public interface NestedScrollingParent {
+         /**
+          * 开启滑动流程
+          * 按照自己的需求返回true，该方法决定了当前控件是否能接收到其内部View(子View或者子View的子View)滑动时的参数
+          * @param child ViewParent 的直接子View 该View 或者是他的子View实现了NestedScrollingChild
+          * @param target 实现了NestedScrollingChild的View
+          * @param nestedScrollAxes Flags consisting of {@link ViewCompat#SCROLL_AXIS_HORIZONTAL},
+          *                         {@link ViewCompat#SCROLL_AXIS_VERTICAL} or both
+          * @return 是否接受此次嵌套滑动
+          */
+         public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes);
+     
+         /**
+          * 
+          *在onStartNestedScroll 返回true之后调用此方法,
+          * @param child Direct child of this ViewParent containing target
+          * @param target View that initiated the nested scroll
+          * @param nestedScrollAxes Flags consisting of {@link ViewCompat#SCROLL_AXIS_HORIZONTAL},
+          *                         {@link ViewCompat#SCROLL_AXIS_VERTICAL} or both
+          * @see #onStartNestedScroll(View, View, int)
+          * @see #onStopNestedScroll(View)
+          */
+         public void onNestedScrollAccepted(View child, View target, int nestedScrollAxes);
+     
+         /**
+          * 滑动结束
+          * React to a nested scroll operation ending.
+          *
+          * <p>Perform cleanup after a nested scrolling operation.
+          * This method will be called when a nested scroll stops, for example when a nested touch
+          * scroll ends with a {@link MotionEvent#ACTION_UP} or {@link MotionEvent#ACTION_CANCEL} event.
+          * Implementations of this method should always call their superclass's implementation of this
+          * method if one is present.</p>
+          *
+          * @param target View that initiated the nested scroll
+          */
+         public void onStopNestedScroll(View target);
+     
+         /**
+          * 
+          * @param target The descendent view controlling the nested scroll
+          * @param dxConsumed Horizontal scroll distance in pixels already consumed by target
+          * @param dyConsumed Vertical scroll distance in pixels already consumed by target
+          * @param dxUnconsumed Horizontal scroll distance in pixels not consumed by target
+          * @param dyUnconsumed Vertical scroll distance in pixels not consumed by target
+          */
+         public void onNestedScroll(View target, int dxConsumed, int dyConsumed,
+                 int dxUnconsumed, int dyUnconsumed);
+     
+         /**
+          * 
+          *发生嵌套滚动之前回调
+          * @param target View that initiated the nested scroll
+          * @param dx Horizontal scroll distance in pixels
+          * @param dy Vertical scroll distance in pixels
+          * @param consumed Output. The horizontal and vertical scroll distance consumed by this parent
+          */
+         public void onNestedPreScroll(View target, int dx, int dy, int[] consumed);
+     
+         /**
+          * Request a fling from a nested scroll.
+          *
+          * <p>This method signifies that a nested scrolling child has detected suitable conditions
+          * for a fling. Generally this means that a touch scroll has ended with a
+          * {@link VelocityTracker velocity} in the direction of scrolling that meets or exceeds
+          * the {@link ViewConfiguration#getScaledMinimumFlingVelocity() minimum fling velocity}
+          * along a scrollable axis.</p>
+          *
+          * <p>If a nested scrolling child view would normally fling but it is at the edge of
+          * its own content, it can use this method to delegate the fling to its nested scrolling
+          * parent instead. The parent may optionally consume the fling or observe a child fling.</p>
+          *
+          * @param target View that initiated the nested scroll
+          * @param velocityX Horizontal velocity in pixels per second
+          * @param velocityY Vertical velocity in pixels per second
+          * @param consumed true if the child consumed the fling, false otherwise
+          * @return true if this parent consumed or otherwise reacted to the fling
+          */
+         public boolean onNestedFling(View target, float velocityX, float velocityY, boolean consumed);
+     
+         /**
+          * React to a nested fling before the target view consumes it.
+          *
+          * <p>This method siginfies that a nested scrolling child has detected a fling with the given
+          * velocity along each axis. Generally this means that a touch scroll has ended with a
+          * {@link VelocityTracker velocity} in the direction of scrolling that meets or exceeds
+          * the {@link ViewConfiguration#getScaledMinimumFlingVelocity() minimum fling velocity}
+          * along a scrollable axis.</p>
+          *
+          * <p>If a nested scrolling parent is consuming motion as part of a
+          * {@link #onNestedPreScroll(View, int, int, int[]) pre-scroll}, it may be appropriate for
+          * it to also consume the pre-fling to complete that same motion. By returning
+          * <code>true</code> from this method, the parent indicates that the child should not
+          * fling its own internal content as well.</p>
+          *
+          * @param target View that initiated the nested scroll
+          * @param velocityX Horizontal velocity in pixels per second
+          * @param velocityY Vertical velocity in pixels per second
+          * @return true if this parent consumed the fling ahead of the target view
+          */
+         public boolean onNestedPreFling(View target, float velocityX, float velocityY);
+     
+         /**
+          * Return the current axes of nested scrolling for this NestedScrollingParent.
+          *
+          * <p>A NestedScrollingParent returning something other than {@link ViewCompat#SCROLL_AXIS_NONE}
+          * is currently acting as a nested scrolling parent for one or more descendant views in
+          * the hierarchy.</p>
+          *
+          * @return Flags indicating the current axes of nested scrolling
+          * @see ViewCompat#SCROLL_AXIS_HORIZONTAL
+          * @see ViewCompat#SCROLL_AXIS_VERTICAL
+          * @see ViewCompat#SCROLL_AXIS_NONE
+          */
+         public int getNestedScrollAxes();
+     }
+     
+ 
+ 整个嵌套滑动的流程child对应parent:    
+ 
+ 子view  | 父view|
+ --------- | --------|
+ startNestedScroll  | onStartNestedScroll、onNestedScrollAccepted |
+ dispatchNestedPreScroll  |onNestedPreScroll  |
+ dispatchNestedScroll |onNestedScroll  |
+ stopNestedScroll  | onStopNestedScroll |
+  未完  
+
+ 	
+ 	
+ 	
+ 	
+ 	
+   
+   
+[自定义Behavior的艺术探索-仿UC浏览器主页](http://www.jianshu.com/p/f7989a2a3ec2#)     
+[Android嵌套滑动机制（NestedScrolling）](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0603/2990.html)  
+__4.拦截Window Insets__   
+__5.拦截Measurement 和 layout__    
+[拦截一切的CoordinatorLayout Behavior](http://jcodecraeer.com/a/anzhuokaifa/androidkaifa/2016/0224/3991.html)
+
 ### 学习资料               
 [Material Design之 AppbarLayout 开发实践总结](http://www.jianshu.com/p/ac56f11e7ce1)    
 [玩转AppBarLayout，更酷炫的顶部栏](http://blog.csdn.net/huachao1001/article/details/51558835)    
