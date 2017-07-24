@@ -479,79 +479,7 @@ __这个方法主要的作用是：__
 ## FloatingActionButton 
 [浅谈FloatingActionButton(悬浮按钮)](http://www.cnblogs.com/xqxacm/p/5852783.html)    
 [浮动操作按钮详解](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0718/3197.html)   
-## 8
-## CoordinatorLayout    
-__一.概念__    
-译为：协调者布局    
->1.首先可以理解Coordinatorlayout是一个FrameLayout升级版本 
 
->2.重要功能：CoordinatorLayout可以用来协调其子view之间动作的交互     
-如：协调滑动控件和AppBarLayout之间的交互等等，  
-CoordinatorLayout 实现子View之间的交互是靠Behavior来实现的        
-
-
-__二.使用__    
-CoordinatorLayout子View之间是如何协调的： 
->1.根据前面与：    
-       3.AppbarLayout  
-       4.CollapsingToolbarLayout  
-       6.SnackBar  
-       6.FloatingActionButton  
-       等使用的情况，子View之间相互协调是通过CoordinatorLayout的布局属性app:layout_behavior来设置的   
-       layout_behavior 属性定义了这个View如何和其他View互相交互的行为, 其值填写的是一个class的名字(全称带包名) 
-       这个值指定的类必须是 CoordinatorLayout.Behavior<V> 的子类, 我们也可以自定义一个该类继承于它, 以此来写自己想要的交互效果.   
-       
-__三.Behavior__   
-   
-__1.概述__
->CoordinatorLayout的诸多功能全部依赖与CoordinatorLayout.Behavior来实现   
-通过为CoordinatorLayout的直接子view设置一个Behavior，就可以拦截touch events, window insets, measurement, layout, 和 nested scrolling等动作。      
-Design Library大量利用了Behaviors来实现你所看到的功能
-
-__2.Behavior的创建__
->2.1、创建behavior,需要继承 [CoordinatorLayout.Behavior](https://developer.android.google.cn/reference/android/support/design/widget/CoordinatorLayout.Behavior.html)
-或其子View
->>  
-
-    public class FollowUpDownBehavior extends CoordinatorLayout.Behavior {
-    
-      public FollowUpDownBehavior(Context context, AttributeSet attrs) {
-          super(context, attrs);
-  
-        }
-    }
->>这样就可以将这个Behavior设置给任何View,如果只想设置给某一些特定类型的View则可以传入泛型如:  
-
-    FollowUpDownBehavior extends CoordinatorLayout.Behavior<Button>
-__3.设置Behavior__    
-设置Behavior一共有3种方式:  
->3.1 在代码中设置Behavior     
->>CoordinatorLayout.LayoutParam中可以存储Behavior布局属性,所以在代码中：
-
-        FollowUpDownBehavior behavior = new FollowUpDownBehavior();
-        CoordinatorLayout.LayoutParams layoutParams= (CoordinatorLayout.LayoutParams) view.getLayoutParams();
-        view.setLayoutParams(layoutParams);
-
->3.2 在XML中设置        
->>在xml布局中直接设置属性值    
-
-    <View android:layout_width="50dp"
-          android:layout_height="20dp"
-          android:background="@color/black"
-          app:layout_behavior="com.dqr.www.meterialdesignstudy.coordinatorlayout.behavior.FollowUpDownBehavior"
-          app:target="@id/moveView"></View>
->>在XML设置属性，初始化Behavior时，是使用的FollowUpDownBehavior(Context context, AttributeSet attrs)   
-两个参数的构造函数,有传入AttributeSet所以可以自定义一些属性然后在xml中设置，Behavior中接收并使用，   
-如app:target属性设置一个目标ID   
-
-
->3.3 在View类上添加默认的Behavior   
->>在自定义View时我们希望这个View自带一个Behavior，而不需要去另外设置，我们可以在自定义View类上设置    
-注释:
-
-    @CoordinatorLayout.DefaultBehavior(BtnTestBehavior.class)
-    public class TempView extends View {
-    }
   
 ## 8
 ## CoordinatorLayout    
