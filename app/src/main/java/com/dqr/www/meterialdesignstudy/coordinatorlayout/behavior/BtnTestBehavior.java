@@ -1,6 +1,7 @@
 package com.dqr.www.meterialdesignstudy.coordinatorlayout.behavior;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -8,6 +9,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+
+import com.dqr.www.meterialdesignstudy.R;
 
 /**
  * Description：
@@ -18,10 +21,22 @@ import android.widget.Button;
 public class BtnTestBehavior extends CoordinatorLayout.Behavior<Button> {
     private static final String TAG = "BtnTestBehavior";
     private int width;
+    private int target;
     public BtnTestBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
         DisplayMetrics displayMetrics=context.getResources().getDisplayMetrics();
         width=displayMetrics.widthPixels;
+
+        TypedArray array=context.obtainStyledAttributes(attrs, R.styleable.Follow);
+        for(int i=0;i<array.getIndexCount();i++){
+            //获取属性名称ID根据位置索引
+            int attrId = array.getIndex(i);
+            //根据属性名称ID获取属性值
+            if(attrId==R.styleable.Follow_target){
+                target = array.getResourceId(attrId, -1);
+            }
+        }
+        array.recycle();
     }
 
     /**
@@ -30,10 +45,8 @@ public class BtnTestBehavior extends CoordinatorLayout.Behavior<Button> {
      */
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, Button child, View dependency) {
-       if(dependency instanceof TempView){
-            return true;
-        }
-        return super.layoutDependsOn(parent, child, dependency);
+        Log.d(TAG, "layoutDependsOn: ");
+      return dependency.getId()==target;
     }
 
     /**
@@ -51,6 +64,7 @@ public class BtnTestBehavior extends CoordinatorLayout.Behavior<Button> {
         int y = top;
 
         setPosition(child, x, y);
+        Log.d(TAG, "onDependentViewChanged: ");
         return super.onDependentViewChanged(parent, child, dependency);
     }
 

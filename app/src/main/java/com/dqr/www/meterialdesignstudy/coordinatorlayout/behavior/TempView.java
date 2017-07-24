@@ -11,7 +11,6 @@ import android.view.View;
  * Author：LiuYM
  * Date： 2017-07-19 19:24
  */
-@CoordinatorLayout.DefaultBehavior(BtnTestBehavior.class)
 public class TempView extends View {
     private int lastX;
     private int lastY;

@@ -36,26 +36,27 @@ public class FollowUpDownBehavior extends CoordinatorLayout.Behavior {
             }
 
         }
-
+        array.recycle();
 
     }
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
-
+        Log.d(TAG, "layoutDependsOn: ");
         return dependency.getId()==target;
     }
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
         child.setY(dependency.getY()+dependency.getHeight());
+        Log.d(TAG, "onDependentViewChanged: ");
         return super.onDependentViewChanged(parent, child, dependency);
     }
 
     @Override
     public boolean onInterceptTouchEvent(CoordinatorLayout parent, View child, MotionEvent ev) {
         Log.d(TAG, "onInterceptTouchEvent: ");
-        return super.onInterceptTouchEvent(parent, child, ev);
+        return false;
     }
 
     @Override
@@ -63,4 +64,6 @@ public class FollowUpDownBehavior extends CoordinatorLayout.Behavior {
         Log.d(TAG, "onTouchEvent: ");
         return super.onTouchEvent(parent, child, ev);
     }
+
+
 }

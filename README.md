@@ -543,6 +543,8 @@ __3.设置Behavior__
 >>在XML设置属性，初始化Behavior时，是使用的FollowUpDownBehavior(Context context, AttributeSet attrs)   
 两个参数的构造函数,有传入AttributeSet所以可以自定义一些属性然后在xml中设置，Behavior中接收并使用，   
 如app:target属性设置一个目标ID   
+
+
 >3.3 在View类上添加默认的Behavior   
 >>在自定义View时我们希望这个View自带一个Behavior，而不需要去另外设置，我们可以在自定义View类上设置    
 注释:
@@ -551,6 +553,7 @@ __3.设置Behavior__
     public class TempView extends View {
     }
 
+__Behavior的四大功能__
 ### 学习资料               
 [Material Design之 AppbarLayout 开发实践总结](http://www.jianshu.com/p/ac56f11e7ce1)    
 [玩转AppBarLayout，更酷炫的顶部栏](http://blog.csdn.net/huachao1001/article/details/51558835)    
@@ -559,7 +562,7 @@ __3.设置Behavior__
 [自定义Behavior的艺术探索-仿UC浏览器主页](http://www.jianshu.com/p/f7989a2a3ec2#)    
 [一个神奇的控件——Android CoordinatorLayout与Behavior使用指南](http://www.jianshu.com/p/488283f74e69)    
 [ CoordinatorLayout的使用如此简单](http://blog.csdn.net/huachao1001/article/details/51554608)    
-
+[拦截一切的CoordinatorLayout Behavior](http://jcodecraeer.com/a/anzhuokaifa/androidkaifa/2016/0224/3991.html)
 
 
 [回到顶部](#目录) 
