@@ -25,11 +25,8 @@
         <activity android:name=".others.TextInputLayoutActivity"/>
         <activity android:name=".others.SnackBarActivity"/>
         <activity android:name=".coordinatorlayout.CoordinatorLayoutActivity"/>
-        <activity
-            android:name=".others.ScrollingActivity"
-            android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+        <activity android:name=".coordinatorlayout.CoordinatorLayoutActivity02"
+                  android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

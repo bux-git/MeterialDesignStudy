@@ -23,9 +23,9 @@
             android:icon="@drawable/ic_menu_share"
             android:title="CoordinatorLayout"></item>
         <item
-            android:id="@+id/ScrollingActivity"
+            android:id="@+id/CoordinatorLayout02"
             android:icon="@drawable/ic_menu_share"
-            android:title="ScrollingActivity"></item>
+            android:title="Coordinator02"></item>
         <item  android:title="sub item">
             <menu>
                 <item

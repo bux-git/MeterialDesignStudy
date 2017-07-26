@@ -12,7 +12,7 @@
 ## 1
 ## 官方侧滑菜单DrawerLayout 
 
-`![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/drawerlayout01.gif1)     `
+![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/drawerlayout01.gif)     
 
 __一.概念__    
     DrawerLayout其实是一个布局控件，跟LinearLayout等控件是一种东西，但是drawerLayout带有滑动的功能。只要按照drawerLayout的规定布局方式写完布局，就能有侧滑的效果
@@ -213,7 +213,7 @@ __三.常用属性__
     app:itemTextColor=""  item 文字颜色
 ## 3
 #### AppBarLayout
-`![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/appbarlayout01.gif1)  `
+![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/appbarlayout01.gif)  
 __一.概念__    
 
     AppBarLayout继承自LinearLayout，布局方向为垂直方向。所以你可以把它当成垂直布局的LinearLayout来使用。
@@ -331,7 +331,7 @@ CollapsingToolbarLayout使用时
 
 ## 5
 ## TextInputLayout
-`![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/textinputlayout01.gif1)`  
+![imgs](https://github.com/bux-git/MeterialDesignStudy/raw/master/imges/textinputlayout01.gif)
 __1.概念__  
 TextInputLayout 将EditText包裹起来能够辅助EditText实现一些如hint 以浮动标签的形式显示出来，同时可以通过setErrorEnabled(boolean)和setError(CharSequence)来显示错误信息等   
 每一个TextInputLayout中只能有一个EditText
@@ -781,11 +781,11 @@ __NestedScrollingChild & NestedScrollingChildHelper__
      
      public interface NestedScrollingParent {
          /**
-          * 开启滑动流程
-          * 按照自己的需求返回true，该方法决定了当前控件是否能接收到其内部View(子View或者子View的子View)滑动时的参数
+          * 当子view的调用NestedScrollingChild的方法startNestedScroll时,会调用该方法 
+          * 该方法决定了当前控件是否能接收到其内部View(直接子View或者子View的子View)滑动时的参数
           * @param child ViewParent 的直接子View 该View 或者是他的子View实现了NestedScrollingChild
-          * @param target 实现了NestedScrollingChild的View
-          * @param nestedScrollAxes Flags consisting of {@link ViewCompat#SCROLL_AXIS_HORIZONTAL},
+          * @param target 实现了NestedScrollingChild的View (在这里如果不涉及多层嵌套的话,child和target)
+          * @param nestedScrollAxes 嵌套滚动的滚动方向 Flags consisting of {@link ViewCompat#SCROLL_AXIS_HORIZONTAL},
           *                         {@link ViewCompat#SCROLL_AXIS_VERTICAL} or both
           * @return 是否接受此次嵌套滑动
           */
@@ -793,7 +793,7 @@ __NestedScrollingChild & NestedScrollingChildHelper__
      
          /**
           * 
-          *在onStartNestedScroll 返回true之后调用此方法,
+          *如果onStartNestedScroll方法返回true,之后就会调用该方法.它是让嵌套滚动在开始滚动之前,让布局容器(viewGroup)或者它的父类执行一些配置的初始化
           * @param child Direct child of this ViewParent containing target
           * @param target View that initiated the nested scroll
           * @param nestedScrollAxes Flags consisting of {@link ViewCompat#SCROLL_AXIS_HORIZONTAL},
@@ -804,7 +804,7 @@ __NestedScrollingChild & NestedScrollingChildHelper__
          public void onNestedScrollAccepted(View child, View target, int nestedScrollAxes);
      
          /**
-          * 滑动结束
+          * 当子view调用stopNestedScroll时会调用该方法,停止滚动
           * React to a nested scroll operation ending.
           *
           * <p>Perform cleanup after a nested scrolling operation.
@@ -818,22 +818,23 @@ __NestedScrollingChild & NestedScrollingChildHelper__
          public void onStopNestedScroll(View target);
      
          /**
-          * 
-          * @param target The descendent view controlling the nested scroll
-          * @param dxConsumed Horizontal scroll distance in pixels already consumed by target
-          * @param dyConsumed Vertical scroll distance in pixels already consumed by target
-          * @param dxUnconsumed Horizontal scroll distance in pixels not consumed by target
-          * @param dyUnconsumed Vertical scroll distance in pixels not consumed by target
+          * 当子view调用dispatchNestedScroll方法时,会调用该方法
+          * @param target 实现了NestedScrollingChild的View
+          * @param dxConsumed 表示target已经消费的x方向的距离
+          * @param dyConsumed 表示target已经消费的y方向的距离
+          * @param dxUnconsumed 表示x方向剩下的滑动距离 
+          * @param dyUnconsumed 表示y方向剩下的滑动距离 
           */
          public void onNestedScroll(View target, int dxConsumed, int dyConsumed,
                  int dxUnconsumed, int dyUnconsumed);
      
          /**
           * 
-          *发生嵌套滚动之前回调
-          * @param target View that initiated the nested scroll
-          * @param dx Horizontal scroll distance in pixels
-          * @param dy Vertical scroll distance in pixels
+          *consumed:表示父布局要消费的滚动距离,consumed[0]和consumed[1]分别表示父布局在x和y方向上消费的距离. 
+           当子view调用dispatchNestedPreScroll方法是,会调用该方法
+          * @param target 实现了NestedScrollingChild的View
+          * @param dx 表示target本次滚动产生的x方向的滚动总距离 
+          * @param dy 表示target本次滚动产生的y方向的滚动总距离 
           * @param consumed Output. The horizontal and vertical scroll distance consumed by this parent
           */
          public void onNestedPreScroll(View target, int dx, int dy, int[] consumed);
